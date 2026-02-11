@@ -75,12 +75,18 @@ class CsvCron extends Command
                                 $ratio = 0;
                                 $ratio_val = $data[$dimension_key];
                                 $data[$stock_number] = str_replace(" ", "", $data[$stock_number]);
+// worked 11-02-26
+                               if (!empty($data[$dimension_key]) && !empty($ratio_val)) {
 
-                                if (!empty($data[$dimension_key])) {
-                                    $ratio_val = explode("|", $ratio_val);
-                                    $data[$ratio_key] = $ratio_val[0] - $ratio_val[1];
-                                    if ($data[$ratio_key] < 0) {
-                                        $data[$ratio_key] = $ratio_val[1] - $ratio_val[0];
+                                    $parts = explode('|', $ratio_val);
+
+                                    if (count($parts) === 2 && is_numeric($parts[0]) && is_numeric($parts[1])) {
+
+                                        $data[$ratio_key] = abs($parts[0] - $parts[1]);
+
+                                    } else {
+                                        // fallback if ratio format is invalid
+                                        $data[$ratio_key] = 0;
                                     }
                                 }
 
