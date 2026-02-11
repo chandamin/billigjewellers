@@ -75,7 +75,7 @@ class CsvCron extends Command
                                 $ratio = 0;
                                 $ratio_val = $data[$dimension_key];
                                 $data[$stock_number] = str_replace(" ", "", $data[$stock_number]);
-// worked 11-02-26
+// 11-02-26
                                if (!empty($data[$dimension_key]) && !empty($ratio_val)) {
 
                                     $parts = explode('|', $ratio_val);
